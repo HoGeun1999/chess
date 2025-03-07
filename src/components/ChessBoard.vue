@@ -1,6 +1,14 @@
 <template>
-  <div class="chess-board"> 
-    <BoardBlock v-for="(board,index) in flatBoardData" :key="index" :value="board" :index="index"/>
+  <div class="chess-board">
+    <div v-for="(row, rowIndex) in boardData" :key="rowIndex" class="row">
+      <BoardBlock 
+        v-for="(board, colIndex) in row" 
+        :key="`${rowIndex}-${colIndex}`" 
+        :value="board" 
+        :rowIndex="rowIndex" 
+        :columnIndex="colIndex" 
+      />
+    </div>
   </div>
 </template>
 
@@ -19,8 +27,6 @@ const boardData: string[][] = [
   ['br', 'bn', 'bb', 'bq', 'bk', 'bb', 'bn', 'br'],
 ];
 
-const flatBoardData: string[] = boardData.flat();
-
 export default Vue.extend({
   name: 'ChessBoard',
   components: {
@@ -28,19 +34,24 @@ export default Vue.extend({
   },
   data() {
     return {
-      flatBoardData,
+      boardData,
     };
   },
 });
 </script>
 
 <style scoped>
-.chess-board{
+.chess-board {
   border: 1px solid black;
   width: 720px;
   height: 720px;
-  display: grid;
-  grid-template-columns: repeat(8, 90px);
-  grid-template-rows: repeat(8, 90px);
+  display: flex;
+  flex-direction: column;
 }
+
+.row {
+  display: flex;
+  width: 100%;
+}
+
 </style>

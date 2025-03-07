@@ -1,70 +1,69 @@
 <template>
-  <div class="board-block">
-    <div :class="evenOrOdd" @click="handleOnClick">
+  <div class="board-block" :class="boardBlockClass" @click="handleOnClick">
       <img class="img" :src="imgURL" />
-    </div>
   </div>
 </template>
 
 <script lang="ts">
 import Vue from 'vue';
 
+const knightMove: number[][]= [[2, 1], [2, -1], [-2, 1], [-2, -1], [1, 2], [1, -2], [-1, 2], [-1, -2]]
 
 export default Vue.extend({
   name: 'BoardBlock',
   methods: {
     handleOnClick() {
-      console.log('click')
+      if(this.value === 'wn' || this.value == 'bn'){
+        console.log(knightMove)
+      }
     }
   },
   props: {
-    value:{
+    value: {
       type: String,
       required: true,
     },
-    index:{
+    rowIndex: {
       type: Number,
       required: true,
-    }
+    },
+    columnIndex: {
+      type: Number,
+      required: true,
+    },
   },
-  computed:{
-    evenOrOdd(): String{
-      if (Math.floor(this.index / 8) % 2 === this.index % 2) {
-        return 'board-block-even';
+  computed: {
+    boardBlockClass(): string {
+      const baseClass = 'board-block';
+      const evenOrOddClass = (this.rowIndex + this.columnIndex) % 2 === 0 ? 'even' : 'odd';
+      return `${baseClass} ${evenOrOddClass}`;
+    },
+    imgURL(): string | undefined {
+      if (this.value !== '') {
+        return `https://assets-themes.chess.com/image/tlwah/150/${this.value}.png`;
       } else {
-        return 'board-block-odd';
+        return undefined;
       }
     },
-    imgURL(): String | undefined{
-      if(this.value !== ''){
-        return `https://assets-themes.chess.com/image/tlwah/150/${this.value}.png`;
-      }
-      else{
-        return undefined
-      }
-    }
   },
 });
 </script>
 
 <style scoped>
-.board-block{
-  width: 90px;
-  height: 90px;
-}
-.board-block-even{
-  width: 100%;
-  height: 100%;
-  background-color: green;
+.board-block {
+  width: 90px;  
+  height: 90px; 
 }
 
-.board-block-odd{
-  width: 100%;
-  height: 100%;
-  background-color: white;
+.board-block.even {
+  background-color: #d18b47; 
 }
 
-.img{
+.board-block.odd {
+  background-color: #ffce9e; 
+}
+
+.img {
   width: 100%;
   height: 100%;
 }
