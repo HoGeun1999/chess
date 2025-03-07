@@ -16,26 +16,15 @@
 import Vue from 'vue';
 import BoardBlock from './BoardBlock.vue';
 
-const boardData: string[][] = [
-  ['wr', 'wn', 'wb', 'wq', 'wk', 'wb', 'wn', 'wr'],
-  ['wp', 'wp', 'wp', 'wp', 'wp', 'wp', 'wp', 'wp'],
-  ['', '', '', '', '', '', '', ''],
-  ['', '', '', '', '', '', '', ''],
-  ['', '', '', '', '', '', '', ''],
-  ['', '', '', '', '', '', '', ''],
-  ['bp', 'bp', 'bp', 'bp', 'bp', 'bp', 'bp', 'bp'],
-  ['br', 'bn', 'bb', 'bq', 'bk', 'bb', 'bn', 'br'],
-];
-
 export default Vue.extend({
   name: 'ChessBoard',
   components: {
     BoardBlock,
   },
-  data() {
-    return {
-      boardData,
-    };
+  computed: {
+    boardData(): string[][] {
+      return this.$store.state.boardData;
+    },
   },
 });
 </script>
