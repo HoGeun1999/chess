@@ -61,6 +61,23 @@ const store = new Vuex.Store<State>({
     undoBoardData(state) {
       state.boardData = state.boardDataHistory.pop()!;
     },
+    resetGame(state) {
+      state.turnCount = 0;
+      state.isGameOver = false;
+      state.isSelected = false;
+      state.selectedPiece = null;
+      state.boardData = [
+        ['wr', 'wn', 'wb', 'wq', 'wk', 'wb', 'wn', 'wr'],
+        ['wp', 'wp', 'wp', 'wp', 'wp', 'wp', 'wp', 'wp'],
+        ['', '', '', '', '', '', '', ''],
+        ['', '', '', '', '', '', '', ''],
+        ['', '', '', '', '', '', '', ''],
+        ['', '', '', '', '', '', '', ''],
+        ['bp', 'bp', 'bp', 'bp', 'bp', 'bp', 'bp', 'bp'],
+        ['br', 'bn', 'bb', 'bq', 'bk', 'bb', 'bn', 'br'],
+      ];
+      state.boardDataHistory = [];
+    },
   },
 });
 
