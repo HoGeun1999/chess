@@ -7,16 +7,28 @@
 <script lang="ts">
 import Vue from 'vue';
 
-// const knightMove: number[][]= [[2, 1], [2, -1], [-2, 1], [-2, -1], [1, 2], [1, -2], [-1, 2], [-1, -2]]
 
 export default Vue.extend({
   name: 'BoardBlock',
+  data() {
+    return {
+      Move: {
+        'r': [[1,0],[0,1],[-1,0],[0,-1]],
+        'b': [[1,1],[1,-1],[-1,1],[-1,-1]],
+        'q': [[1,0],[0,1],[-1,0],[0,-1],[1,1],[1,-1],[-1,1],[-1,-1]],
+        'k': [[1,0],[0,1],[-1,0],[0,-1],[1,1],[1,-1],[-1,1],[-1,-1]],
+      } as Record<string, number[][]>,
+    };
+  },
   methods: {
-    handleOnClick() {
+    handleOnClick():void {
+      if (this.$store.state.isGameOver) {
+        return 
+      }
       const isBlackTurn = this.turnCount % 2 === 0;
       const isWhiteTurn = !isBlackTurn;
       const pieceColor = this.value[0];
-  
+
       if(!this.isSelected){
         if((isBlackTurn&&pieceColor === 'b') || (isWhiteTurn && pieceColor === 'w')){
           this.$store.commit('setSelectedPiece', { row: this.rowIndex, col: this.columnIndex, value: this.value });
@@ -25,20 +37,145 @@ export default Vue.extend({
       }
       else{
         if(this.value === "" || pieceColor !== this.selectedPiece.value[0]){
-          // 여기에 그 말이 움직일 수 있는 조건인지 확인하고 movePiece실행하도록
-          
-          this.$store.commit('movePiece',{
-            from: {row: this.selectedPiece.row, col:this.selectedPiece.col},
-            to:{row:this.rowIndex,col:this.columnIndex}}
-          )
-          this.$store.commit('toggleSelection');
-          this.$store.commit('nextTurn');
-          this.$store.commit('clearSelectedPiece');
+          if(this.selectedPiece.value.includes("n")){
+            if(this.moveCheckKnight()){
+              this.playTurn()
+            }
+            else{
+              return
+            }
+          } 
+          else if(this.selectedPiece.value.includes("p")){
+            if(this.moveCheckPawn()){
+              this.playTurn()
+            }
+            else{
+              return
+            }
+          }
+          else if(this.moveCheckOthers(this.selectedPiece.value[1])){
+            this.playTurn()
+          }
+          this.endGame()
         }
         else{
           this.$store.commit('setSelectedPiece', { row: this.rowIndex, col: this.columnIndex, value: this.value });
         }
       }
+    },
+    moveCheckKnight():boolean{
+      const knightMove: number[][]= [[2, 1], [2, -1], [-2, 1], [-2, -1], [1, 2], [1, -2], [-1, 2], [-1, -2]]
+      const moveLocation: number[] = [this.rowIndex, this.columnIndex]
+      for(let i = 0; i < knightMove.length; i++){
+        const Location: number[] = [this.selectedPiece.row + knightMove[i][0], this.selectedPiece.col + knightMove[i][1]]
+        if(Location[0] === moveLocation[0] && Location[1] === moveLocation[1]){
+          return true
+        }
+      }
+      return false
+    },
+    moveCheckPawn(): boolean {
+      const isBlackPawn = this.selectedPiece.value[0] === 'b';
+      const direction = isBlackPawn ? -1 : 1;
+      const startingRow = isBlackPawn ? 6 : 1;
+      const frontRow = this.selectedPiece.row + direction;
+      if (this.rowIndex === frontRow && this.columnIndex === this.selectedPiece.col) {
+        if (this.boardData[frontRow][this.columnIndex] === "") {
+          return true;
+        }
+      }
+
+      if (this.selectedPiece.row === startingRow && this.rowIndex === frontRow + direction && this.columnIndex === this.selectedPiece.col) {
+        if (this.boardData[frontRow][this.columnIndex] === "" && this.boardData[frontRow + direction][this.columnIndex] === "") {
+          return true;
+        }
+      }
+
+      if (this.rowIndex === frontRow && (this.columnIndex === this.selectedPiece.col + 1 || this.columnIndex === this.selectedPiece.col - 1)) {
+        const targetPiece = this.boardData[this.rowIndex][this.columnIndex];
+        if (targetPiece && targetPiece[0] !== this.selectedPiece.value[0]) { // 상대방 기물인지 확인
+          return true;
+        }
+      }
+      return false;
+    },
+
+    moveCheckOthers(pieceType: string): boolean {
+      if (!this.Move[pieceType]) return false; 
+
+      const directions = this.Move[pieceType]; 
+      const startRow = this.selectedPiece.row;
+      const startCol = this.selectedPiece.col;
+      const targetRow = this.rowIndex;
+      const targetCol = this.columnIndex;
+
+      if (pieceType === 'k') {
+        for (const [rowDir, colDir] of directions) {
+          const newRow = startRow + rowDir;
+          const newCol = startCol + colDir;
+          if (newRow === targetRow && newCol === targetCol) {
+            return true; 
+          }
+        }
+        return false; 
+      }
+
+      for (const [rowDir, colDir] of directions) {
+        let currentRow = startRow + rowDir;
+        let currentCol = startCol + colDir;
+
+        while (this.isWithinBounds(currentRow, currentCol)) {
+          if (currentRow === targetRow && currentCol === targetCol) {
+            return true;
+          }
+          if (this.boardData[currentRow][currentCol] !== "") {
+            break; 
+          }
+          currentRow += rowDir;
+          currentCol += colDir;
+        }
+      }
+      return false; 
+    },
+
+    isWithinBounds(row: number, col: number): boolean {
+      return row >= 0 && row < 8 && col >= 0 && col < 8; 
+
+    },
+    playTurn():void{
+      this.$store.commit('saveBoardData')
+      this.$store.commit('movePiece',{
+            from: {row: this.selectedPiece.row, col:this.selectedPiece.col},
+            to:{row:this.rowIndex,col:this.columnIndex}})
+      this.$store.commit('toggleSelection');
+      this.$store.commit('nextTurn');
+      this.$store.commit('clearSelectedPiece');
+    },
+    endGame():void {
+      let hasBlackKing = false; 
+      let hasWhiteKing = false;
+
+      for (let i = 0; i < this.boardData.length; i++) {
+        for (let j = 0; j < this.boardData[i].length; j++) {
+          if (this.boardData[i][j] === "bk") {
+            hasBlackKing = true;
+          }
+          if (this.boardData[i][j] === "wk") {
+            hasWhiteKing = true;
+          }
+        }
+      }
+      if (!hasBlackKing) {
+        alert("백 승");
+        this.$store.commit('setGameOver', true); 
+        return 
+      }
+      if (!hasWhiteKing) {
+        alert("흑 승");
+        this.$store.commit('setGameOver', true); 
+        return 
+      }
+      return
     }
   },
   props: {
@@ -84,6 +221,9 @@ export default Vue.extend({
     },
     boardData(): string[][] {
       return this.$store.state.boardData; 
+    },
+    boadDataHistory(): any{
+      return this.$store.state.boardDataHistory;
     },
   },
 });
