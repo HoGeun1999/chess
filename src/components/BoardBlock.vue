@@ -22,7 +22,7 @@ export default Vue.extend({
   },
   methods: {
     handleOnClick():void {
-      if (this.$store.state.isGameOver) {
+      if (!this.$store.state.isGameStarted || this.$store.state.isGameOver)  {
         return 
       }
       const isBlackTurn = this.turnCount % 2 === 0;

@@ -10,13 +10,16 @@ interface State{
   selectedPiece: { row: number; col: number; value: string } | null;
   boardData: string[][];
   boardDataHistory: string[][][];
+  isTimerSet : boolean;
+  isGameStarted : boolean;
 }
 
 const store = new Vuex.Store<State>({
   state: {
     turnCount: 0,
-    isGameOver: true,
+    isGameOver: false,
     isSelected: false,
+    isGameStarted: false,
     selectedPiece: null,
     boardData: [
       ['wr', 'wn', 'wb', 'wq', 'wk', 'wb', 'wn', 'wr'],
@@ -29,6 +32,7 @@ const store = new Vuex.Store<State>({
       ['br', 'bn', 'bb', 'bq', 'bk', 'bb', 'bn', 'br'],
     ],
     boardDataHistory: [],
+    isTimerSet: false,
   },
   mutations: {
     nextTurn(state) {
@@ -54,6 +58,9 @@ const store = new Vuex.Store<State>({
     setGameOver(state, payload: boolean) {
       state.isGameOver = payload;
     },
+    setGameStarted(state, payload: boolean) {
+      state.isGameStarted = payload;
+    },
     saveBoardData(state) {
       const copiedBoardData = JSON.parse(JSON.stringify(state.boardData));  // 깊은 복사
       state.boardDataHistory.push(copiedBoardData);
@@ -65,6 +72,7 @@ const store = new Vuex.Store<State>({
       state.turnCount = 0;
       state.isGameOver = false;
       state.isSelected = false;
+      state.isGameStarted = false;
       state.selectedPiece = null;
       state.boardData = [
         ['wr', 'wn', 'wb', 'wq', 'wk', 'wb', 'wn', 'wr'],
@@ -77,7 +85,11 @@ const store = new Vuex.Store<State>({
         ['br', 'bn', 'bb', 'bq', 'bk', 'bb', 'bn', 'br'],
       ];
       state.boardDataHistory = [];
+      state.isTimerSet = false;
     },
+    toggleTimerSet(state) {
+      state.isTimerSet = !state.isTimerSet;
+    }
   },
 });
 

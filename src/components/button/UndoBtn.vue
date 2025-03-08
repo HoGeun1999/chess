@@ -9,6 +9,7 @@ export default Vue.extend({
   name: 'UndoBtn',
   methods: {
     onClickUndoBtn(): void {
+      if (this.isGameOver) return;
       if (this.turnCount>0){
         this.$store.commit('preTurn');
         if(this.isSelected){
@@ -16,7 +17,6 @@ export default Vue.extend({
           this.$store.commit('toggleSelection');
         } 
         this.$store.commit('undoBoardData');
-        if(this.isGameOver) this.$store.commit('setGameOver', false)
       }
       return
     }

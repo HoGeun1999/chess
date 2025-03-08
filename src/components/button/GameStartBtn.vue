@@ -8,11 +8,12 @@ import Vue from 'vue';
 export default Vue.extend({
   name: 'GameStartBtn',
   methods: {
-    startGame(){
-      this.$store.commit('setGameOver',false)
+    startGame():void{
+      this.$store.commit('setGameStarted',true);
     },
   },
-
+  computed: {
+  }
 })
 </script>
 
