@@ -20,7 +20,7 @@ export default Vue.extend({
       if(!this.isSelected){
         if((isBlackTurn&&pieceColor === 'b') || (isWhiteTurn && pieceColor === 'w')){
           this.$store.commit('setSelectedPiece', { row: this.rowIndex, col: this.columnIndex, value: this.value });
-          this.$store.commit('toggleSelection', true);
+          this.$store.commit('toggleSelection');
         }
       }
       else{
@@ -31,7 +31,7 @@ export default Vue.extend({
             from: {row: this.selectedPiece.row, col:this.selectedPiece.col},
             to:{row:this.rowIndex,col:this.columnIndex}}
           )
-          this.$store.commit('toggleSelection', false);
+          this.$store.commit('toggleSelection');
           this.$store.commit('nextTurn');
           this.$store.commit('clearSelectedPiece');
         }
