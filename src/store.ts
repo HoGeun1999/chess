@@ -15,7 +15,7 @@ interface State{
 const store = new Vuex.Store<State>({
   state: {
     turnCount: 0,
-    isGameOver: false,
+    isGameOver: true,
     isSelected: false,
     selectedPiece: null,
     boardData: [

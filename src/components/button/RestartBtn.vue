@@ -11,9 +11,13 @@ export default Vue.extend({
   methods: {
     restartGame(): void {
       this.$store.commit('resetGame')
+      this.$store.commit('setGameOver',true)
     }
   },
 
 })
 
 </script>
+
+<style>
+</style>
