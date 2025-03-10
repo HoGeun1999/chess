@@ -1,19 +1,30 @@
 <template>
-  <div v-if="isTimerSet">
+  <div v-if="isTimerSet" class="timer-container">
+    <div>
+      <p>이 타이머는 피셔 룰을 적용하고 있습니다.</p>
+      <p>피셔 룰 설명: 기본시간은 각자 30분입니다. 착수를 완료하면 20초를 기본시간에 추가하게 됩니다. 시간을 모두 사용하게 되면 시간패 입니다.</p>
+    </div>
     <div class="timer">
       white timer : {{ whiteTime }}
     </div>
     <div>
       black timer : {{ blackTime }}
     </div>
+    <div class="pause-button-container">
+      <PauseTimerBtn @start-timer="startTimer"/>
+    </div>
   </div>
 </template>
 
 <script lang="ts">
 import Vue from 'vue';
+import PauseTimerBtn from './button/PauseTimerBtn.vue';
 
 export default Vue.extend({
   name: 'GameTimer',
+  components: {
+    PauseTimerBtn,
+  },
   computed: {
     isTimerSet(): boolean {
       return this.$store.state.isTimerSet;
@@ -58,11 +69,17 @@ export default Vue.extend({
         const turnCount = this.$store.state.turnCount;
         
         if(turnCount !== 0 && !this.$store.state.isGameOver){
-          if (turnCount % 2 === 0) {
+          if(this.$store.state.isTimerPaused){
+            if (turnCount % 2 === 0) {
             this.startBlackTimer();
-          } else {
-            this.startWhiteTimer();
+            } else {
+              this.startWhiteTimer();
+            }
           }
+          else{
+            return
+          }
+
         }
 
       }, 1000);
