@@ -5,7 +5,7 @@
       <div class="restart-popup-text">현재게임을 포기하시고 <br>새로운 게임을 하시겠습니까?</div>
       <div class="restart-popup-buttons">
         <button @click="handleReStartOKbtn">확인</button>
-        <button @click="toggleRestartPopup">취소</button>
+        <button @click="hadleRestartCancelbtn">취소</button>
       </div>
     </div>
   </div>
@@ -28,10 +28,16 @@ export default Vue.extend({
     },
     toggleRestartPopup(): void{
       this.restartPopup = !this.restartPopup
+      this.$store.commit('setTimerPaused',false)
     },
     handleReStartOKbtn(): void{
       this.restartGame()
       this.toggleRestartPopup()
+      this.$store.commit('setTimerPaused',true)
+    },
+    hadleRestartCancelbtn(): void{
+      this.toggleRestartPopup()
+      this.$store.commit('setTimerPaused',true)
     }
   },
 
