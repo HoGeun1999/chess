@@ -1,10 +1,13 @@
 <template>
-  <div>
-    <button  class="restart-btn" @click="toggleRestartPopup">새 게임</button>
+  <div class="restart-btn-wrapper">
+    <button  class="restart-btn" @click="hadleRestartBtn">새 게임</button>
+    <div v-if="restartPopup" class="overlay"></div>
     <div v-if="restartPopup" class="restart-popup">
-      <div>설명</div>
-      <button @click="handleReStartOKbtn">확인</button>
-      <button @click="toggleRestartPopup">취소</button>
+      <div class="restart-popup-text">현재게임을 포기하시고 <br>새로운 게임을 하시겠습니까?</div>
+      <div class="restart-popup-buttons">
+        <button @click="handleReStartOKbtn">확인</button>
+        <button @click="hadleRestartCancelbtn">취소</button>
+      </div>
     </div>
   </div>
 </template>
@@ -27,15 +30,77 @@ export default Vue.extend({
     toggleRestartPopup(): void{
       this.restartPopup = !this.restartPopup
     },
+    hadleRestartBtn():void{
+      this.toggleRestartPopup()
+      this.$store.commit('setTimerPaused',false)
+    },
     handleReStartOKbtn(): void{
       this.restartGame()
       this.toggleRestartPopup()
-    }
-  },
-
+      this.$store.commit('setTimerPaused',true)
+    },
+    hadleRestartCancelbtn(): void{
+      this.toggleRestartPopup()
+      this.$store.commit('setTimerPaused',true)      
+    },
+  }
 })
 
 </script>
 
 <style>
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.5); /* 반투명 검은색 배경 */
+  z-index: 999; /* 팝업보다 낮지만 최상위로 */
+}
+
+.restart-popup {
+  position: fixed;
+  top: 30%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 300px;
+  height: 150px;
+  background-color: white;
+  border: 2px solid black;
+  border-radius: 8px;
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px;
+  box-sizing: border-box; /* 패딩을 포함하여 전체 크기 계산 */
+}
+
+.restart-popup div {
+  margin-bottom: 10px; /* 텍스트와 버튼 사이 간격 */
+}
+
+.restart-popup-buttons {
+  display: flex;
+  justify-content: space-between; /* 좌우로 분리 */
+  width: 100%; /* 부모 크기에 맞게 설정 */
+}
+
+.restart-popup button {
+  width: 45%; /* 버튼 너비 설정 */
+}
+
+.restart-btn {
+  width: 100%;
+  height: 100%;
+  font-weight: bold;
+  font-size: 16px;
+}
+
+.restart-popup-text{
+  text-align: center;
+  margin-top: 10px;
+}
 </style>
