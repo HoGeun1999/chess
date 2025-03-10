@@ -1,12 +1,7 @@
 <template>
   <div id="app" @contextmenu="handleRightClick">
     <ChessBoard/>
-    <div class="btn-container">
-      <GameStartBtn/>
-      <SetTimerBtn/>
-      <UndoBtn/>
-      <RestartBtn/>
-    </div>
+    <ButtonContainer/>
     <GameTimer/>
   </div>
 </template>
@@ -14,21 +9,15 @@
 <script lang="ts">
 import Vue from 'vue';
 import ChessBoard from './components/ChessBoard.vue'
-import UndoBtn from './components/button/UndoBtn.vue';
-import RestartBtn from './components/button/RestartBtn.vue';
-import SetTimerBtn from './components/button/SetTimerBtn.vue';
 import GameTimer from './components/GameTimer.vue';
-import GameStartBtn from './components/button/GameStartBtn.vue';
+import ButtonContainer from './components/button/ButtonContainer.vue';
 
 export default Vue.extend({
   name: 'App',
   components: {
     ChessBoard,
-    UndoBtn,
-    RestartBtn,
-    SetTimerBtn,
     GameTimer,
-    GameStartBtn,
+    ButtonContainer,
   },
   methods: {
     handleRightClick(event: MouseEvent): void {
