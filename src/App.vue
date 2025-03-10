@@ -67,6 +67,7 @@ export default Vue.extend({
     ". bottom-container .";
 
   background-color: rgb(80, 60, 60)
+  
 }
 div {
   caret-color: transparent; 
@@ -78,11 +79,11 @@ div {
 
 .bottom-container{
   grid-area: bottom-container;
+  display: flex;
+  gap: 30px
 }
 
 .timer-container {
   grid-area: timer-container;
-  display: flex;
-  gap: 30px;
 }
 </style>
