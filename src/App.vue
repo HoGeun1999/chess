@@ -1,13 +1,17 @@
 <template>
   <div id="app" @contextmenu="handleRightClick">
-    <ChessBoard/>
-    <div class="btn-container">
+    <div class="main-container">
+      <ChessBoard/>
+    </div>
+    <div class="timer-container">
+      <GameTimer/>
+    </div>
+    <div class="bottom-container">
       <GameStartBtn/>
       <SetTimerBtn/>
       <UndoBtn/>
       <RestartBtn/>
     </div>
-    <GameTimer/>
   </div>
 </template>
 
@@ -50,7 +54,35 @@ export default Vue.extend({
 </script>
 
 <style>
+#app{
+  height: 100vh;
+  display: grid;
+  align-items: center;
+  justify-items: center;
+  grid-template-columns: repeat(3, 1fr); 
+  grid-template-rows: 1fr 200px; 
+
+  grid-template-areas:
+    ". main-container timer-container"
+    ". bottom-container .";
+
+  background-color: rgb(80, 60, 60)
+}
 div {
   caret-color: transparent; 
+}
+
+.main-container{
+  grid-area: main-container;
+}
+
+.bottom-container{
+  grid-area: bottom-container;
+}
+
+.timer-container {
+  grid-area: timer-container;
+  display: flex;
+  gap: 30px;
 }
 </style>
