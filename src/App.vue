@@ -19,14 +19,20 @@
 import Vue from 'vue';
 import ChessBoard from './components/ChessBoard.vue'
 import GameTimer from './components/GameTimer.vue';
-import ButtonContainer from './components/button/ButtonContainer.vue';
+import GameStartBtn from './components/button/GameStartBtn.vue';
+import SetTimerBtn from './components/button/SetTimerBtn.vue';
+import UndoBtn from './components/button/UndoBtn.vue';
+import RestartBtn from './components/button/RestartBtn.vue';
 
 export default Vue.extend({
   name: 'App',
   components: {
     ChessBoard,
     GameTimer,
-    ButtonContainer,
+    GameStartBtn,
+    SetTimerBtn,
+    UndoBtn,
+    RestartBtn,
   },
   methods: {
     handleRightClick(event: MouseEvent): void {
