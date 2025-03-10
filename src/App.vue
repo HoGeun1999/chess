@@ -1,16 +1,16 @@
 <template>
   <div id="app" @contextmenu="handleRightClick">
     <div class="main-container">
-      <ChessBoard/>
+      <ChessBoard />
     </div>
     <div class="timer-container">
       <GameTimer/>
     </div>
     <div class="bottom-container">
-      <GameStartBtn/>
-      <SetTimerBtn/>
-      <UndoBtn/>
-      <RestartBtn/>
+      <GameStartBtn class="btn"/>
+      <SetTimerBtn class="btn"/>
+      <UndoBtn class="btn"/>
+      <RestartBtn class="btn"/>
     </div>
   </div>
 </template>
@@ -64,9 +64,9 @@ export default Vue.extend({
 
   grid-template-areas:
     ". main-container timer-container"
-    ". bottom-container .";
+    "bottom-container bottom-container bottom-container";
 
-  background-color: rgb(80, 60, 60)
+  background-color: rgb(55, 45, 45)
   
 }
 div {
@@ -85,5 +85,14 @@ div {
 
 .timer-container {
   grid-area: timer-container;
+  width: 100%;
+  height: 100%;
+}
+
+.btn{
+  width: 200px;
+  height: 50px;
+  font-weight: bold;
+  font-size: 16px;
 }
 </style>

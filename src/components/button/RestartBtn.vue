@@ -1,6 +1,7 @@
 <template>
   <div class="restart-btn-wrapper">
-    <button  class="restart-btn" @click="toggleRestartPopup">새 게임</button>
+    <button  class="restart-btn" @click="hadleRestartBtn">새 게임</button>
+    <div v-if="restartPopup" class="overlay"></div>
     <div v-if="restartPopup" class="restart-popup">
       <div class="restart-popup-text">현재게임을 포기하시고 <br>새로운 게임을 하시겠습니까?</div>
       <div class="restart-popup-buttons">
@@ -28,6 +29,9 @@ export default Vue.extend({
     },
     toggleRestartPopup(): void{
       this.restartPopup = !this.restartPopup
+    },
+    hadleRestartBtn():void{
+      this.toggleRestartPopup()
       this.$store.commit('setTimerPaused',false)
     },
     handleReStartOKbtn(): void{
@@ -37,20 +41,23 @@ export default Vue.extend({
     },
     hadleRestartCancelbtn(): void{
       this.toggleRestartPopup()
-      this.$store.commit('setTimerPaused',true)
-    }
-  },
-
+      this.$store.commit('setTimerPaused',true)      
+    },
+  }
 })
 
 </script>
 
 <style>
-.restart-btn-wrapper {
-  width: 100px;
-  height: 50px;
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.5); /* 반투명 검은색 배경 */
+  z-index: 999; /* 팝업보다 낮지만 최상위로 */
 }
-
 
 .restart-popup {
   position: fixed;
@@ -88,6 +95,8 @@ export default Vue.extend({
 .restart-btn {
   width: 100%;
   height: 100%;
+  font-weight: bold;
+  font-size: 16px;
 }
 
 .restart-popup-text{
