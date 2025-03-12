@@ -1,5 +1,6 @@
 <template>
   <div id="app" @contextmenu="handleRightClick">
+      <WinerPopup/>
     <div class="main-left-container">
       <PromotionPawn/>
     </div>
@@ -27,6 +28,7 @@ import SetTimerBtn from './components/button/SetTimerBtn.vue';
 import UndoBtn from './components/button/UndoBtn.vue';
 import RestartBtn from './components/button/RestartBtn.vue';
 import PromotionPawn from './components/PromotionPawn.vue';
+import WinerPopup from './components/WinerPopup.vue';
 
 export default Vue.extend({
   name: 'App',
@@ -38,6 +40,7 @@ export default Vue.extend({
     UndoBtn,
     RestartBtn,
     PromotionPawn,
+    WinerPopup,
   },
   methods: {
     handleRightClick(event: MouseEvent): void {

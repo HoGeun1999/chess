@@ -1,4 +1,5 @@
 import Vue from 'vue';
+import { set } from 'vue/types/umd';
 import Vuex from 'vuex';
 
 Vue.use(Vuex);
@@ -17,6 +18,7 @@ interface State{
   timers: number[];
   isTimerPaused: boolean;
   isPromotion: boolean;
+  isShowGameOverPopup: boolean;
 }
 
 const store = new Vuex.Store<State>({
@@ -43,6 +45,7 @@ const store = new Vuex.Store<State>({
     timers: [],
     isTimerPaused: true,
     isPromotion: false,
+    isShowGameOverPopup: true,
   },
   mutations: {
     nextTurn(state) {
@@ -113,6 +116,9 @@ const store = new Vuex.Store<State>({
     setIsPromotion(state, payload: boolean) {
       state.isPromotion = payload;
     },
+    setGameOverPopup(state, payload: boolean) {
+      state.isShowGameOverPopup = payload;
+    },
     resetGame(state) {
       state.turnCount = 0;
       state.isGameOver = false;
@@ -134,6 +140,7 @@ const store = new Vuex.Store<State>({
       state.blackTime = 10;
       state.whiteTime = 10;
       state.isTimerPaused = true;
+      state.isShowGameOverPopup = false;
     },
   },
 });

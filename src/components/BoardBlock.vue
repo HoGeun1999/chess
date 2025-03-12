@@ -166,14 +166,14 @@ export default Vue.extend({
         }
       }
       if (!hasBlackKing) {
-        alert("백 승");
         this.$store.commit('setGameOver', true); 
+        this.$store.commit('setGameOverPopup',true);
         this.$store.commit('clearAllTimers');
         return 
       }
       if (!hasWhiteKing) {
-        alert("흑 승");
         this.$store.commit('setGameOver', true); 
+        this.$store.commit('setGameOverPopup',true);
         this.$store.commit('clearAllTimers');
         return 
       }

@@ -46,6 +46,7 @@ export default Vue.extend({
   },
   methods: {
     checkPromotion(): void {
+      if(this.$store.state.isGameOver) return
       const firstRow = this.boardData[0];
       const lastRow = this.boardData[this.boardData.length - 1];
 
@@ -91,12 +92,10 @@ export default Vue.extend({
 <style>
 .promotion-item-container {
   position: fixed;
-  display: flex;
-  flex-direction: row;
   z-index: 1001;
-  left: 50%;
-  top: 40%;
-  transform: translate(-50%, -50%);
+  left: 20%;
+  top: 20%;
+
 }
 
 .promotion-item {
@@ -104,7 +103,7 @@ export default Vue.extend({
   height: 90px;
   border: 1px solid white;
   margin-top: 0.5px;
-  z-index: 1001; /* overlay보다 높게 설정 */
+  z-index: 1001; 
   cursor: pointer;
 }
 

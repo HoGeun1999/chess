@@ -52,7 +52,7 @@ export default Vue.extend({
         this.$store.commit('updateBlackTime', -1);
       } else {
         this.$store.commit('setGameOver', true);
-        alert('백 승');
+        this.$store.commit('setGameOverPopup',true);
         this.clearTimers();
       }
     },
@@ -61,7 +61,7 @@ export default Vue.extend({
         this.$store.commit('updateWhiteTime', -1);
       } else {
         this.$store.commit('setGameOver', true);
-        alert('흑 승');
+        this.$store.commit('setGameOverPopup',true);
         this.clearTimers();
       }
     },
