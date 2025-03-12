@@ -55,8 +55,8 @@ export default Vue.extend({
   left: 0;
   width: 100vw;
   height: 100vh;
-  background-color: rgba(0, 0, 0, 0.5); /* 반투명 검은색 배경 */
-  z-index: 999; /* 팝업보다 낮지만 최상위로 */
+  background-color: rgba(0, 0, 0, 0.5); 
+  z-index: 999; 
 }
 
 .restart-popup {
@@ -75,21 +75,21 @@ export default Vue.extend({
   align-items: center;
   justify-content: space-between;
   padding: 10px;
-  box-sizing: border-box; /* 패딩을 포함하여 전체 크기 계산 */
+  box-sizing: border-box;
 }
 
 .restart-popup div {
-  margin-bottom: 10px; /* 텍스트와 버튼 사이 간격 */
+  margin-bottom: 10px;
 }
 
 .restart-popup-buttons {
   display: flex;
-  justify-content: space-between; /* 좌우로 분리 */
-  width: 100%; /* 부모 크기에 맞게 설정 */
+  justify-content: space-between; 
+  width: 100%; 
 }
 
 .restart-popup button {
-  width: 45%; /* 버튼 너비 설정 */
+  width: 45%; 
 }
 
 .restart-btn {

@@ -96,13 +96,12 @@ export default Vue.extend({
 
       if (this.rowIndex === frontRow && (this.columnIndex === this.selectedPiece.col + 1 || this.columnIndex === this.selectedPiece.col - 1)) {
         const targetPiece = this.boardData[this.rowIndex][this.columnIndex];
-        if (targetPiece && targetPiece[0] !== this.selectedPiece.value[0]) { // 상대방 기물인지 확인
+        if (targetPiece && targetPiece[0] !== this.selectedPiece.value[0]) {
           return true;
         }
       }
       return false;
     },
-
     moveCheckOthers(pieceType: string): boolean {
       if (!this.Move[pieceType]) return false; 
 
@@ -140,10 +139,8 @@ export default Vue.extend({
       }
       return false; 
     },
-
     isWithinBounds(row: number, col: number): boolean {
       return row >= 0 && row < 8 && col >= 0 && col < 8; 
-
     },
     playTurn():void{
       this.$store.commit('saveBoardData')
@@ -181,7 +178,7 @@ export default Vue.extend({
         return 
       }
       return
-    }
+    },
   },
   props: {
     value: {
