@@ -1,5 +1,8 @@
 <template>
   <div id="app" @contextmenu="handleRightClick">
+    <div class="main-left-container">
+      <PromotionPawn/>
+    </div>
     <div class="main-container">
       <ChessBoard />
     </div>
@@ -23,6 +26,7 @@ import GameStartBtn from './components/button/GameStartBtn.vue';
 import SetTimerBtn from './components/button/SetTimerBtn.vue';
 import UndoBtn from './components/button/UndoBtn.vue';
 import RestartBtn from './components/button/RestartBtn.vue';
+import PromotionPawn from './components/PromotionPawn.vue';
 
 export default Vue.extend({
   name: 'App',
@@ -33,6 +37,7 @@ export default Vue.extend({
     SetTimerBtn,
     UndoBtn,
     RestartBtn,
+    PromotionPawn,
   },
   methods: {
     handleRightClick(event: MouseEvent): void {
@@ -63,7 +68,7 @@ export default Vue.extend({
   grid-template-rows: 1fr 200px; 
 
   grid-template-areas:
-    ". main-container timer-container"
+    "main-left-container main-container timer-container"
     "bottom-container bottom-container bottom-container";
 
   background-color: rgb(55, 45, 45)
@@ -85,6 +90,15 @@ div {
 
 .timer-container {
   grid-area: timer-container;
+  width: 100%;
+  height: 100%;
+}
+
+.main-left-container{
+  grid-area: main-left-container;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
   width: 100%;
   height: 100%;
 }
