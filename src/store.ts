@@ -40,8 +40,8 @@ const store = new Vuex.Store<State>({
     ],
     boardDataHistory: [],
     isTimerSet: false,
-    blackTime: 300,
-    whiteTime: 300,
+    blackTime: 1800,
+    whiteTime: 1800,
     timers: [],
     isTimerPaused: true,
     isPromotion: false,
@@ -137,8 +137,8 @@ const store = new Vuex.Store<State>({
       ];
       state.boardDataHistory.length = 0;
       state.isTimerSet = false;
-      state.blackTime = 300;
-      state.whiteTime = 300;
+      state.blackTime = 1800;
+      state.whiteTime = 1800;
       state.isTimerPaused = true;
       state.isShowGameOverPopup = false;
     },

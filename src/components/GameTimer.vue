@@ -1,7 +1,7 @@
 <template>
   <div v-if="isTimerSet" class="timer-container">
     <div class="white-timer">
-      white timer : {{ whiteTime }}
+      white timer : {{ formattedWhiteTime }}
     </div>
     <div class="timer-description">
       <p>이 타이머는 피셔 룰을 적용하고 있습니다. <br><br> 피셔 룰 설명: 기본시간은 각자 30분입니다. <br>착수를 완료하면 20초를 기본시간에 추가하게 됩니다.<br> 시간을 모두 사용하게 되면 시간패 입니다.</p>
@@ -10,9 +10,8 @@
       <PauseTimerBtn @start-timer="startTimer"/>
     </div>
     <div class="black-timer">
-      black timer : {{ blackTime }}
+      black timer : {{ formattedBlackTime }}
     </div>
-
   </div>
 </template>
 
@@ -35,6 +34,12 @@ export default Vue.extend({
     blackTime(): number {
       return this.$store.state.blackTime;
     },
+    formattedWhiteTime(): string {
+      return this.formatTime(this.whiteTime);
+    },
+    formattedBlackTime(): string {
+      return this.formatTime(this.blackTime);
+    },
   },
   watch: {
     isTimerSet(newVal) {
@@ -46,12 +51,17 @@ export default Vue.extend({
     },
   },
   methods: {
+    formatTime(seconds: number): string {
+      const minutes = Math.floor(seconds / 60);
+      const secs = seconds % 60;
+      return `${String(minutes).padStart(2, '0')}:${String(secs).padStart(2, '0')}`;
+    },
     startBlackTimer() {
       if (this.blackTime > 0) {
         this.$store.commit('updateBlackTime', -1);
       } else {
         this.$store.commit('setGameOver', true);
-        this.$store.commit('setGameOverPopup',true);
+        this.$store.commit('setGameOverPopup', true);
         this.clearTimers();
       }
     },
@@ -60,7 +70,7 @@ export default Vue.extend({
         this.$store.commit('updateWhiteTime', -1);
       } else {
         this.$store.commit('setGameOver', true);
-        this.$store.commit('setGameOverPopup',true);
+        this.$store.commit('setGameOverPopup', true);
         this.clearTimers();
       }
     },
@@ -68,27 +78,27 @@ export default Vue.extend({
       const timerId = setInterval(() => {
         const turnCount = this.$store.state.turnCount;
         
-        if(turnCount !== 0 && !this.$store.state.isGameOver){
-          if(this.$store.state.isTimerPaused){
+        if (turnCount !== 0 && !this.$store.state.isGameOver) {
+          if (this.$store.state.isTimerPaused) {
             if (turnCount % 2 === 0) {
               this.startBlackTimer();
             } else {
               this.startWhiteTimer();
             }
-          }
-          else{
-            return
+          } else {
+            return;
           }
         }
       }, 1000);
-      this.$store.commit('addTimer', timerId)
+      this.$store.commit('addTimer', timerId);
     },
     clearTimers() {
       this.$store.commit('clearAllTimers');
     },
   },
-})
+});
 </script>
+
 
 <style scoped>
 .timer-container {

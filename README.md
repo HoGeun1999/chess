@@ -1,24 +1,9 @@
 # chess
 
-## Project setup
-```
-npm install
-```
+This project was created to practice Vue by implementing chess. Although I was unable to implement castling, one of the special rules of chess, I plan to implement it in a future chess project using React.
 
-### Compiles and hot-reloads for development
-```
-npm run start
-```
+link : https://hogeun1999.github.io/chess/
 
-### Compiles and minifies for production
-```
-npm run build
-```
+## main UI
 
-### Lints and fixes files
-```
-npm run lint
-```
 
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
