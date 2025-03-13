@@ -4,7 +4,6 @@
       white timer : {{ whiteTime }}
     </div>
     <div class="timer-description">
-      <button class="toggle-description">v</button>
       <p>이 타이머는 피셔 룰을 적용하고 있습니다. <br><br> 피셔 룰 설명: 기본시간은 각자 30분입니다. <br>착수를 완료하면 20초를 기본시간에 추가하게 됩니다.<br> 시간을 모두 사용하게 되면 시간패 입니다.</p>
     </div>
     <div class="pause-button-container">

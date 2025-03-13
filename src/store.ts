@@ -40,12 +40,12 @@ const store = new Vuex.Store<State>({
     ],
     boardDataHistory: [],
     isTimerSet: false,
-    blackTime: 20,
-    whiteTime: 20,
+    blackTime: 300,
+    whiteTime: 300,
     timers: [],
     isTimerPaused: true,
     isPromotion: false,
-    isShowGameOverPopup: true,
+    isShowGameOverPopup: false,
   },
   mutations: {
     nextTurn(state) {
@@ -97,9 +97,9 @@ const store = new Vuex.Store<State>({
       const turnCount = state.turnCount;
       if (turnCount !== 1){
         if (turnCount % 2 === 0) {
-          state.whiteTime += 0;
+          state.whiteTime += 20;
         } else {
-          state.blackTime += 0;
+          state.blackTime += 20;
         }
       }
     },
@@ -137,8 +137,8 @@ const store = new Vuex.Store<State>({
       ];
       state.boardDataHistory.length = 0;
       state.isTimerSet = false;
-      state.blackTime = 10;
-      state.whiteTime = 10;
+      state.blackTime = 300;
+      state.whiteTime = 300;
       state.isTimerPaused = true;
       state.isShowGameOverPopup = false;
     },
