@@ -1,5 +1,5 @@
 <template>
-  <button @click="pauseTimer">{{ isTimerPaused ? '타이머 정지' : '타이머 시작' }}</button>
+  <button class="pause-button" @click="pauseTimer">{{ isTimerPaused ? '타이머 정지' : '타이머 시작' }}</button>
 </template>
 
 <script lang="ts">
@@ -28,4 +28,8 @@ export default Vue.extend({
 
 
 <style>
+.pause-button {
+  width: 120px;
+  height: 60px;
+}
 </style>
