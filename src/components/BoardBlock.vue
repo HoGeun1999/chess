@@ -40,7 +40,9 @@ export default Vue.extend({
           if(this.selectedPiece.value.includes("n")){
             if(this.moveCheckKnight()){
               this.playTurn()
-              this.$store.commit('giveFischerTime')
+              if(this.$store.state.isTimerSet){
+                this.$store.commit('giveFischerTime')
+              }              
             }
             else{
               return
@@ -49,7 +51,9 @@ export default Vue.extend({
           else if(this.selectedPiece.value.includes("p")){
             if(this.moveCheckPawn()){
               this.playTurn()
-              this.$store.commit('giveFischerTime')
+              if(this.$store.state.isTimerSet){
+                this.$store.commit('giveFischerTime')
+              }
             }
             else{
               return
@@ -57,7 +61,9 @@ export default Vue.extend({
           }
           else if(this.moveCheckOthers(this.selectedPiece.value[1])){
             this.playTurn()
-            this.$store.commit('giveFischerTime')
+            if(this.$store.state.isTimerSet){
+                this.$store.commit('giveFischerTime')
+              }
           }
           this.endGame()
         }
